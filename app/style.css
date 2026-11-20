@@ -1,12 +1,71 @@
-html, body { margin: 0; height: 100%; background: #f2f0f4; color: #1d1b22; font: 15px/1.4 system-ui, sans-serif; }
-.app { display: flex; gap: 32px; align-items: center; justify-content: center; height: 100%; padding: 24px; box-sizing: border-box; }
-.controls { display: flex; flex-direction: column; gap: 14px; width: 280px; }
-.controls h1 { margin: 0; font-size: 28px; }
-.controls p { margin: 0; color: #5c5866; }
-label { display: flex; flex-direction: column; gap: 6px; font-weight: 600; }
-input[type=text] { font: inherit; padding: 8px; border: 1px solid #c9c4d1; border-radius: 6px; }
-button { font: inherit; font-weight: 700; padding: 10px; border: 0; border-radius: 6px; background: #1d1b22; color: #fff; cursor: pointer; }
-canvas { width: min(70vh, 60vw); height: min(70vh, 60vw); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); }
+/* Vice City Cover Studio — editor styling. Display type is Anton (OFL), subtitles Oswald (OFL). */
+@font-face {
+  font-family: 'Anton';
+  src: url('./fonts/anton.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Oswald';
+  src: url('./fonts/oswald.woff2') format('woff2');
+  font-weight: 500 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+html, body { margin: 0; min-height: 100%; background: #14101c; color: #f4f0fa; font: 15px/1.45 'Oswald', system-ui, sans-serif; }
+.app { display: flex; gap: 28px; align-items: flex-start; justify-content: center; padding: 24px; box-sizing: border-box; }
+.controls { display: flex; flex-direction: column; gap: 16px; width: 320px; flex: none; }
+.controls h1 {
+  margin: 0; font-family: 'Anton', sans-serif; font-size: 38px; line-height: 1.02;
+  letter-spacing: 1px; color: #ffd23e; text-transform: uppercase;
+  text-shadow: 3px 3px 0 #c22a7a, 6px 6px 0 rgba(0, 0, 0, 0.45);
+}
+.tag { margin: 0; color: #b9b0cc; }
+fieldset { margin: 0; padding: 12px; border: 1px solid #3a3049; border-radius: 10px; display: flex; flex-direction: column; gap: 10px; }
+legend { font-family: 'Anton', sans-serif; font-size: 15px; letter-spacing: 2px; text-transform: uppercase; color: #ff8fb0; padding: 0 6px; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; }
+label { display: flex; flex-direction: column; gap: 5px; font-weight: 600; font-size: 13px; color: #d9d2e6; }
+input[type=text] {
+  font: inherit; padding: 8px 10px; border: 1px solid #4a3f5e; border-radius: 6px;
+  background: #1e1828; color: #fff; width: 100%; box-sizing: border-box;
+}
+button {
+  font: inherit; font-weight: 600; padding: 9px 12px; border: 1px solid #4a3f5e; border-radius: 8px;
+  background: #241d31; color: #fff; cursor: pointer;
+}
+button:hover { border-color: #ffd23e; }
+button.active { background: #ffd23e; color: #1a1024; border-color: #ffd23e; }
+button.primary { background: #ff2e88; border-color: #ff2e88; font-weight: 700; flex: 1; }
+button.primary:hover { background: #ff4d9c; }
+.hint { margin: 0; font-size: 12.5px; color: #9a8fb2; }
+.slots { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+.slot {
+  padding: 0; border: 2px solid #4a3f5e; border-radius: 6px; overflow: hidden;
+  background: #241a30; aspect-ratio: 4 / 3; position: relative;
+}
+.slot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.slot span {
+  position: absolute; left: 0; right: 0; bottom: 0; font-size: 11px; font-weight: 700;
+  background: rgba(0, 0, 0, 0.6); padding: 1px 3px; text-align: center;
+}
+.slot.active { border-color: #ffd23e; box-shadow: 0 0 0 2px rgba(255, 210, 62, 0.4); }
+.upload { flex: 1; cursor: pointer; }
+.upload input { display: none; }
+.upload {
+  display: flex; align-items: center; justify-content: center; padding: 9px 12px;
+  border: 1px dashed #6b5b85; border-radius: 8px; color: #fff; font-weight: 600;
+}
+#status { margin: 0; min-height: 1.2em; color: #8ee6a0; }
+.preview { flex: 1; display: flex; justify-content: center; position: sticky; top: 24px; }
+canvas#cover {
+  max-width: min(72vh, 100%); max-height: calc(100vh - 48px);
+  box-shadow: 0 12px 44px rgba(0, 0, 0, 0.55); border-radius: 4px; cursor: grab;
+  background: #170a24;
+}
+canvas#cover:active { cursor: grabbing; }
 body.shot-cover .controls { display: none; }
 body.shot-cover .app { padding: 0; }
-body.shot-cover canvas { width: 100vw; height: 100vh; box-shadow: none; }
+body.shot-cover .preview { position: static; }
+body.shot-cover canvas#cover { max-width: 100vw; max-height: 100vh; width: 100vw; height: 100vh; box-shadow: none; border-radius: 0; }
